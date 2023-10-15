@@ -1,0 +1,56 @@
+const { Kafka } = require('kafkajs');
+const AWS = require('aws-sdk');
+const moment = require('moment');
+
+// Kafka configuration
+const kafka = new Kafka({
+  clientId: 'my-app',
+  brokers: ['your-kafka-broker'],
+});
+
+const consumer = kafka.consumer({ groupId: 'my-group' });
+
+// AWS S3 configuration
+AWS.config.update({
+  accessKeyId: 'your-access-key-id',
+  secretAccessKey: 'your-secret-access-key',
+  region: 'your-region', // e.g., 'us-east-1'
+});
+
+const s3 = new AWS.S3();
+const s3Bucket = 'your-s3-bucket';
+
+const run = async () => {
+  await consumer.connect();
+  await consumer.subscribe({ topic: 'your-topic', fromBeginning: true });
+
+  await consumer.run({
+    eachMessage: async ({ message }) => {
+      const jsonData = JSON.parse(message.value.toString());
+
+      // Get the current date and time
+      const currentDateTime = moment().format('YYYY-MM-DD_HH');
+
+      // Define S3 object key using the current date and time
+      const s3Key = `${moment().format('YYYY-MM-DD')}/${currentDateTime}.json`;
+
+      // Upload JSON data to S3
+      const params = {
+        Bucket: s3Bucket,
+        Key: s3Key,
+        Body: JSON.stringify(jsonData),
+        ContentType: 'application/json',
+      };
+
+      s3.upload(params, (err, data) => {
+        if (err) {
+          console.error('Error uploading to S3:', err);
+        } else {
+          console.log('Successfully uploaded to S3:', data.Location);
+        }
+      });
+    },
+  });
+};
+
+run().catch(console.error);
