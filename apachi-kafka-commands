@@ -1,0 +1,89 @@
+==========
+commands
+========
+1)zookeeper start
+bin\windows\zookeeper-server-start.bat config\zookeeper.properties
+2)kafka server start
+bin\windows\kafka-server-start.bat config\server.properties
+
+3)create a topic
+bin\windows\kafka-topics.bat --create --topic quickstart-events --bootstrap-server localhost:9092
+
+4)describe the tipic
+bin\windows\kafka-topics.bat --describe --topic quickstart-events --bootstrap-server localhost:9092
+
+5)produce the topic message
+bin\windows\kafka-console-producer.bat --topic quickstart-events --bootstrap-server localhost:9092
+
+6)consume the kafka topic
+bin\windows\kafka-console-consumer.bat --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
+bin\windows\kafka-console-consumer.bat --topic inbound --from-beginning --bootstrap-server localhost:9092
+
+7)delete the topic
+bin\windows\kafka-topics.bat ---bootstrap-server localhost:9092 --delete --topic anand
+
+8)list the topic
+bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 --list
+
+
+
+
+================================================================================================================
+
+topic : kafka-reassign-partitions.sh
+==========================================================================
+
+
+1)Generate Reassignment Plan:
+kafka-reassign-partitions.sh --zookeeper <zookeeper-host>:<zookeeper-port> --topics-to-move-json-file <file-with-reassignment-plan> --broker-list <broker-ids> --generate
+ 
+
+2)Execute Reassignment Plan:
+kafka-reassign-partitions.sh --zookeeper <zookeeper-host>:<zookeeper-port> --reassignment-json-file <file-with-reassignment-plan> --execute
+
+
+3)Verify Reassignment:
+kafka-reassign-partitions.sh --zookeeper <zookeeper-host>:<zookeeper-port> --reassignment-json-file <file-with-reassignment-plan> --verify
+
+4)Cancel Reassignment:
+kafka-reassign-partitions.sh --zookeeper <zookeeper-host>:<zookeeper-port> --reassignment-json-file <file-with-reassignment-plan> --cancel
+
+
+5)kafka-reassign-partitions.sh
+kafka-reassign-partitions.sh --zookeeper <zookeeper-host>:<zookeeper-port> --list
+
+
+bin\windows\kafka-reassign-partitions.bat --bootstrap-server localhost:9092 --list
+
+bin\windows\kafka-reassign-partitions.bat --bootstrap-server localhost:9092 --topics-to-move-json-file <file-with-reassignment-plan> --broker-list <broker-ids> --generate
+
+
+=========================================================
+1)coonect distribute:
+     bin/connect-distributed.sh config/connect-distributed.properties
+    .\bin\windows\connect-distributed.bat .\config\connect-distributed.properties
+
+2)stand alone :
+    bin/windows/connect-standalone.bat config/connect-standalone.properties config/your-connector-config.properties
+    .\bin\windows\connect-standalone.bat .\config\connect-standalone.properties .\config\your-connector-config.properties
+
+3)kafka-acl
+    >List ACLs:
+               kafka-acls.sh --list --authorizer-properties zookeeper.connect=<zookeeper-connect> --topic <topic-name>
+    >Add ACLs:
+              kafka-acls.sh --add --authorizer-properties zookeeper.connect=<zookeeper-connect> --allow-principal <principal> --operation <operation> --topic <topic-name>
+    >Remove ACLs:
+              kafka-acls.sh --remove --authorizer-properties zookeeper.connect=<zookeeper-connect> --allow-principal <principal> --operation <operation> --topic <topic-name>
+    >List Authorized Principals:
+              kafka-acls.sh --list-principals --authorizer-properties zookeeper.connect=<zookeeper-connect> --topic <topic-name>
+
+4) kafka-broker-api-versions
+./bin/kafka-broker-api-versions.sh --bootstrap-server <broker-list>
+
+5)Mirror maker :-
+     >Start Kafka MirrorMaker:
+         kafka-mirror-maker.sh --consumer.config <consumer-config-file> --producer.config <producer-config-file> --whitelist "<topic-pattern>"
+
+         kafka-mirror-maker.sh --consumer.config <consumer-config> --producer.config <producer-config> --whitelist <topics> --replication.config <replication-config>
+
+=============================================
