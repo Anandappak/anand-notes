@@ -1,0 +1,32 @@
+# Define the sources, channels, and sinks
+agentk.sources = kafka-source
+agentk.channels = memory-channel
+agentk.sinks = log-sink
+
+# Configure the Kafka source
+agentk.sources.kafka-source.type = org.apache.flume.source.kafka.KafkaSource
+agentk.sources.kafka-source.zookeeperConnect = localhost:2181
+
+# Set the Kafka brokers (bootstrap servers) using the "brokers" property
+agent.sources.kafka-source.kafka.bootstrap.servers = localhost:9092
+agentk.sources.kafka-source.topic = quickstart-events
+agentk.sources.kafka-source.batchSize = 100
+
+# Set the Kafka group ID using the "groupId" property
+agent.sources.kafka-source.kafka.group.id = your-group-id
+
+# Configure the memory channel
+agentk.channels.memory-channel.type = memory
+agentk.channels.memory-channel.capacity = 10000
+agentk.channels.memory-channel.transactionCapacity = 1000
+
+# Configure the log (file) sink
+agentk.sinks.log-sink.type = FILE_ROLL
+agentk.sinks.log-sink.sink.directory = E:\\out
+agentk.sinks.log-sink.sink.rollInterval = 0
+agentk.sinks.log-sink.sink.rollCount = 10000
+agent.sinks.file-sink.sink.suffix = .txt
+
+# Connect the source, channel, and sink
+agentk.sources.kafka-source.channels = memory-channel
+agentk.sinks.log-sink.channel = memory-channel
