@@ -30,3 +30,6 @@ agent.sinks.file-sink.sink.suffix = .txt
 # Connect the source, channel, and sink
 agentk.sources.kafka-source.channels = memory-channel
 agentk.sinks.log-sink.channel = memory-channel
+
+#create a config file and run bellow commnad
+#flume-ng agent -n agentk -c /path/to/your/config -f /path/to/your/flume.conf
