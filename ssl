@@ -1,0 +1,12 @@
+#trust store
+keytool -import -trustcacerts -alias myca -file ca-certificate.crt -keystore client-truststore.jks
+
+ #create client key store
+ keytool -importkeystore -srckeystore client-keystore.p12 -srcstoretype PKCS12 -destkeystore client-keystore.jks
+ 
+ #import
+ keytool -import -alias myclient -file client-certificate.crt -keystore client-keystore.jks
+ 
+ #verify the certificate 
+ keytool -list -v -keystore client-keystore.jks
+ keytool -list -v -keystore client-truststore.jks
