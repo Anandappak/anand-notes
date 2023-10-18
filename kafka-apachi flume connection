@@ -33,3 +33,28 @@ agentk.sinks.log-sink.channel = memory-channel
 
 #create a config file and run bellow commnad
 #flume-ng agent -n agentk -c /path/to/your/config -f /path/to/your/flume.conf
+
+
+
+
+
+
+
+
+
+
+agent.sources.kafka-source.type = org.apache.flume.source.kafka.KafkaSource
+agent.sources.kafka-source.channels = channel1
+agent.sources.kafka-source.kafka.consumer.zookeeperConnect = zookeeper-server:2181
+agent.sources.kafka-source.kafka.consumer.groupId = flume
+agent.sources.kafka-source.kafka.topics = my-topic
+agent.sources.kafka-source.kafka.consumer.autoOffsetReset = smallest
+
+# Set sleep between Kafka poll requests in milliseconds (default is 1000 ms)
+agent.sources.kafka-source.kafka.consumer.max.poll.interval.ms = 1000
+
+# Set maximum number of records fetched per poll request (default is 500)
+agent.sources.kafka-source.kafka.consumer.max.poll.records = 100
+
+# Set maximum time to spend in poll (default is 300000 ms or 5 minutes)
+agent.sources.kafka-source.kafka.consumer.session.timeout.ms = 30000
