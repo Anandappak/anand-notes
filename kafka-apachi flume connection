@@ -8,12 +8,12 @@ agentk.sources.kafka-source.type = org.apache.flume.source.kafka.KafkaSource
 agentk.sources.kafka-source.zookeeperConnect = localhost:2181
 
 # Set the Kafka brokers (bootstrap servers) using the "brokers" property
-agent.sources.kafka-source.kafka.bootstrap.servers = localhost:9092
+agentk.sources.kafka-source.kafka.bootstrap.servers = localhost:9092
 agentk.sources.kafka-source.topic = quickstart-events
 agentk.sources.kafka-source.batchSize = 100
 
 # Set the Kafka group ID using the "groupId" property
-agent.sources.kafka-source.kafka.group.id = your-group-id
+agentk.sources.kafka-source.kafka.group.id = your-group-id
 
 # Configure the memory channel
 agentk.channels.memory-channel.type = memory
@@ -25,7 +25,7 @@ agentk.sinks.log-sink.type = FILE_ROLL
 agentk.sinks.log-sink.sink.directory = E:\\out
 agentk.sinks.log-sink.sink.rollInterval = 0
 agentk.sinks.log-sink.sink.rollCount = 10000
-agent.sinks.file-sink.sink.suffix = .txt
+agentk.sinks.file-sink.sink.suffix = .txt
 
 # Connect the source, channel, and sink
 agentk.sources.kafka-source.channels = memory-channel
@@ -58,3 +58,33 @@ agent.sources.kafka-source.kafka.consumer.max.poll.records = 100
 
 # Set maximum time to spend in poll (default is 300000 ms or 5 minutes)
 agent.sources.kafka-source.kafka.consumer.session.timeout.ms = 30000
+
+
+
+
+new code logic
+# Define the Flume agent named 'agent1'
+agent1.sources = kafka-source
+agent1.sinks = file-sink
+agent1.channels = memory-channel
+
+# Configuring the Kafka Source
+agent1.sources.kafka-source.type = org.apache.flume.source.kafka.KafkaSource
+agent1.sources.kafka-source.zookeeperConnect = your_zookeeper_host:port
+agent1.sources.kafka-source.topic = your_topic_name
+agent1.sources.kafka-source.groupId = flume
+agent1.sources.kafka-source.channels = memory-channel
+
+# Configuring the File Sink
+agent1.sinks.file-sink.type = FILE_ROLL
+agent1.sinks.file-sink.sink.directory = /path/to/your/output_directory
+agent1.sinks.file-sink.channel = memory-channel
+
+# Configuring the Memory Channel
+agent1.channels.memory-channel.type = memory
+agent1.channels.memory-channel.capacity = 10000
+agent1.channels.memory-channel.transactionCapacity = 1000
+
+# Bind sources and sinks to the channel
+agent1.sources.kafka-source.channels = memory-channel
+agent1.sinks.file-sink.channel = memory-channel
