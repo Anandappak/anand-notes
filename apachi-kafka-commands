@@ -87,3 +87,26 @@ bin\windows\kafka-reassign-partitions.bat --bootstrap-server localhost:9092 --to
          kafka-mirror-maker.sh --consumer.config <consumer-config> --producer.config <producer-config> --whitelist <topics> --replication.config <replication-config>
 
 =============================================
+new logic connection
+# Define the sources, channels, and sinks
+agent.sources = kafka-source
+agent.channels = memory-channel
+agent.sinks = logger-sink
+
+# Kafka Source Configuration
+agent.sources.kafka-source.type = org.apache.flume.source.kafka.KafkaSource
+agent.sources.kafka-source.channels = memory-channel
+agent.sources.kafka-source.zookeeperConnect = zookeeper-server:port
+agent.sources.kafka-source.topic = your-kafka-topic
+agent.sources.kafka-source.groupId = flume-group
+agent.sources.kafka-source.kafka.bootstrap.servers = kafka-broker1:port,kafka-broker2:port
+agent.sources.kafka-source.kafka.consumer.timeout.ms = 100
+
+# Memory Channel Configuration
+agent.channels.memory-channel.type = memory
+agent.channels.memory-channel.capacity = 10000
+agent.channels.memory-channel.transactionCapacity = 1000
+
+# Logger Sink (or any other sink for processing)
+agent.sinks.logger-sink.type = logger
+agent.sinks.logger-sink.channel = memory-channel
