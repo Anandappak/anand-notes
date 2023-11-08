@@ -10,3 +10,13 @@ keytool -import -trustcacerts -alias myca -file ca-certificate.crt -keystore cli
  #verify the certificate 
  keytool -list -v -keystore client-keystore.jks
  keytool -list -v -keystore client-truststore.jks
+
+
+
+
+openssl genpkey -algorithm RSA -out privatekey.pem -aes256
+
+
+openssl req -new -key privatekey.pem -out csr.pem
+
+openssl req -x509 -sha256 -days 365 -key privatekey.pem -in csr.pem -out certificate.pem
