@@ -88,3 +88,44 @@ agent1.channels.memory-channel.transactionCapacity = 1000
 # Bind sources and sinks to the channel
 agent1.sources.kafka-source.channels = memory-channel
 agent1.sinks.file-sink.channel = memory-channel
+
+
+
+
+new logic 
+
+
+# Flume configuration file
+
+# Define the agent and its components
+agent.sources = kafka-source
+agent.channels = memory-channel
+agent.sinks = logger-sink
+
+# Define the Kafka source
+agent.sources.kafka-source.type = org.apache.flume.source.kafka.KafkaSource
+agent.sources.kafka-source.batchSize = 100
+agent.sources.kafka-source.topic = your_topic_name
+agent.sources.kafka-source.zookeeperConnect = zookeeper_host:zookeeper_port
+agent.sources.kafka-source.consumer.group.id = group_id
+agent.sources.kafka-source.kafka.bootstrap.servers = kafka_server:9093  # Use your Kafka broker address and port
+
+# Kafka security settings - SSL
+agent.sources.kafka-source.kafka.security.protocol = SSL
+agent.sources.kafka-source.kafka.ssl.truststore.location = /path/to/truststore.jks
+agent.sources.kafka-source.kafka.ssl.truststore.password = truststore_password
+agent.sources.kafka-source.kafka.ssl.keystore.location = /path/to/keystore.jks
+agent.sources.kafka-source.kafka.ssl.keystore.password = keystore_password
+
+# Define the memory channel
+agent.channels.memory-channel.type = memory
+agent.channels.memory-channel.capacity = 10000
+agent.channels.memory-channel.transactionCapacity = 1000
+
+# Define the sink - here, it's a logger (customize as needed)
+agent.sinks.logger-sink.type = logger
+agent.sinks.logger-sink.channel = memory-channel
+
+# Bind the components
+agent.sources.kafka-source.channels = memory-channel
+agent.sinks.logger-sink.channel = memory-channel
