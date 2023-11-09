@@ -18,3 +18,21 @@ ssl.keyStore.location=/path/to/keystore.jks
 ssl.keyStore.password=keystore_password
 ssl.trustStore.location=/path/to/truststore.jks
 ssl.trustStore.password=truststore_password
+
+
+# Generate a keystore for Kafka broker
+keytool -keystore kafka.server.keystore.jks -alias localhost -validity 365 -genkey
+
+# Create a truststore for Kafka clients
+keytool -keystore kafka.server.truststore.jks -alias CARoot -import -file ca.crt
+
+listeners=PLAINTEXT://localhost:9092,SSL://localhost:9093
+advertised.listeners=SSL://your-kafka-hostname:9093
+ssl.keystore.location=/path/to/kafka.server.keystore.jks
+ssl.keystore.password=your_keystore_password
+ssl.key.password=your_key_password
+ssl.truststore.location=/path/to/kafka.server.truststore.jks
+ssl.truststore.password=your_truststore_password
+
+
+
