@@ -1,0 +1,20 @@
+server.properties
+listeners=PLAINTEXT://your_host:9092,SSL://your_host:9093
+# Specify the SSL port (usually 9093) and the path to SSL certificates
+security.inter.broker.protocol=SSL
+ssl.keystore.location=/path/to/keystore.jks
+ssl.keystore.password=keystore_password
+ssl.key.password=key_password
+ssl.truststore.location=/path/to/truststore.jks
+ssl.truststore.password=truststore_password
+ssl.client.auth=required   # Optional: To enforce client authentication
+
+
+zookeeper.properties
+
+secureClientPort=2281  # Specify the SSL port for clients
+serverCnxnFactory=org.apache.zookeeper.server.NettyServerCnxnFactory
+ssl.keyStore.location=/path/to/keystore.jks
+ssl.keyStore.password=keystore_password
+ssl.trustStore.location=/path/to/truststore.jks
+ssl.trustStore.password=truststore_password
