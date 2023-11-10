@@ -185,3 +185,21 @@ agent.channels.memory-channel.type = memory
 agent.sinks.file-sink.type = FILE_ROLL
 agent.sinks.file-sink.channel = memory-channel
 agent.sinks.file-sink.sink.directory = /path/to/output/directory
+
+
+ex3
+# Source: Kafka
+agent.sources = kafka-source
+agent.sources.kafka-source.type = org.apache.flume.source.kafka.KafkaSource
+agent.sources.kafka-source.kafka.bootstrap.servers = <your_bootstrap_servers>
+agent.sources.kafka-source.kafka.topics = <your_topic>
+agent.sources.kafka-source.kafka.security.protocol = SSL
+agent.sources.kafka-source.kafka.ssl.truststore.location = /path/to/truststore.jks
+agent.sources.kafka-source.kafka.ssl.truststore.password = <truststore_password>
+agent.sources.kafka-source.kafka.ssl.keystore.location = /path/to/keystore.jks
+agent.sources.kafka-source.kafka.ssl.keystore.password = <keystore_password>
+
+# Sink: File
+agent.sinks = file-sink
+agent.sinks.file-sink.type = hdfs
+agent.sinks.file-sink.hdfs.path = /path/to/output/directory
