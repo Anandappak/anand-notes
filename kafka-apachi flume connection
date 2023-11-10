@@ -129,3 +129,31 @@ agent.sinks.logger-sink.channel = memory-channel
 # Bind the components
 agent.sources.kafka-source.channels = memory-channel
 agent.sinks.logger-sink.channel = memory-channel
+
+
+
+# Define the agent name, source, and sink
+agent.sources = kafka-source
+agent.sinks = file-sink
+agent.channels = memory-channel
+
+# Configure the Kafka source
+agent.sources.kafka-source.type = org.apache.flume.source.kafka.KafkaSource
+agent.sources.kafka-source.channels = memory-channel
+agent.sources.kafka-source.kafka.bootstrap.servers = kafka_broker:9092
+agent.sources.kafka-source.kafka.consumer.security.protocol = SSL
+# Add other necessary Kafka SSL configurations
+
+# Configure the file sink
+agent.sinks.file-sink.type = org.apache.flume.sink.FileSink
+agent.sinks.file-sink.channel = memory-channel
+agent.sinks.file-sink.hdfs.path = /path/to/your/local/file.txt
+# Add other necessary file sink configurations
+
+# Configure the memory channel
+agent.channels.memory-channel.type = memory
+agent.channels.memory-channel.capacity = 10000
+
+# Bind the source and sink to the channel
+agent.sources.kafka-source.channels = memory-channel
+agent.sinks.file-sink.channel = memory-channel
