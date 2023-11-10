@@ -203,3 +203,36 @@ agent.sources.kafka-source.kafka.ssl.keystore.password = <keystore_password>
 agent.sinks = file-sink
 agent.sinks.file-sink.type = hdfs
 agent.sinks.file-sink.hdfs.path = /path/to/output/directory
+
+
+ex5 
+# Define the source
+agent.sources = kafka-source
+agent.channels = memory-channel
+agent.sinks = hdfs-sink
+
+# Configure the Kafka source
+agent.sources.kafka-source.type = org.apache.flume.source.kafka.KafkaSource
+agent.sources.kafka-source.channels = memory-channel
+agent.sources.kafka-source.kafka.bootstrap.servers = your_kafka_broker_address
+agent.sources.kafka-source.kafka.topics = your_kafka_topic
+agent.sources.kafka-source.kafka.consumer.group.id = your_consumer_group
+agent.sources.kafka-source.kafka.consumer.keyDeserializer = org.apache.kafka.common.serialization.StringDeserializer
+agent.sources.kafka-source.kafka.consumer.valueDeserializer = org.apache.kafka.common.serialization.StringDeserializer
+agent.sources.kafka-source.kafka.consumer.security.protocol = SSL
+agent.sources.kafka-source.kafka.consumer.ssl.truststore.location = /path/to/truststore.jks
+agent.sources.kafka-source.kafka.consumer.ssl.truststore.password = your_truststore_password
+agent.sources.kafka-source.kafka.consumer.ssl.keystore.location = /path/to/keystore.jks
+agent.sources.kafka-source.kafka.consumer.ssl.keystore.password = your_keystore_password
+
+# Configure the memory channel
+agent.channels.memory-channel.type = memory
+
+# Configure the HDFS sink
+agent.sinks.hdfs-sink.type = hdfs
+agent.sinks.hdfs-sink.hdfs.path = hdfs://your_hdfs_namenode:8020/path/to/hdfs/directory
+agent.sinks.hdfs-sink.hdfs.fileType = DataStream
+agent.sinks.hdfs-sink.hdfs.writeFormat = Text
+agent.sinks.hdfs-sink.hdfs.fileSuffix = .txt
+agent.sinks.hdfs-sink.hdfs.batchSize = 1000
+agent.sinks.hdfs-sink.channel = memory-channel
