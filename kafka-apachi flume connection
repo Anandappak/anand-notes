@@ -157,3 +157,31 @@ agent.channels.memory-channel.capacity = 10000
 # Bind the source and sink to the channel
 agent.sources.kafka-source.channels = memory-channel
 agent.sinks.file-sink.channel = memory-channel
+
+
+
+
+2 Exple
+agent.sources = kafka-source
+agent.channels = memory-channel
+agent.sinks = file-sink
+
+# Kafka Source
+agent.sources.kafka-source.type = org.apache.flume.source.kafka.KafkaSource
+agent.sources.kafka-source.channels = memory-channel
+agent.sources.kafka-source.kafka.bootstrap.servers = your_kafka_bootstrap_servers
+agent.sources.kafka-source.kafka.topics = your_topic
+agent.sources.kafka-source.kafka.group.id = your_consumer_group_id
+agent.sources.kafka-source.kafka.consumer.security.protocol = SSL
+agent.sources.kafka-source.kafka.consumer.ssl.truststore.location = /path/to/truststore.jks
+agent.sources.kafka-source.kafka.consumer.ssl.truststore.password = your_truststore_password
+agent.sources.kafka-source.kafka.consumer.ssl.keystore.location = /path/to/keystore.jks
+agent.sources.kafka-source.kafka.consumer.ssl.keystore.password = your_keystore_password
+
+# Memory Channel
+agent.channels.memory-channel.type = memory
+
+# File Sink
+agent.sinks.file-sink.type = FILE_ROLL
+agent.sinks.file-sink.channel = memory-channel
+agent.sinks.file-sink.sink.directory = /path/to/output/directory
