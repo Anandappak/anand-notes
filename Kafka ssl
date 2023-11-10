@@ -34,5 +34,45 @@ ssl.key.password=your_key_password
 ssl.truststore.location=/path/to/kafka.server.truststore.jks
 ssl.truststore.password=your_truststore_password
 
+ex4
+# Flume configuration file with Kafka source and SSL-enabled File sink
+
+# Define the sources, channels, and sinks
+agent.sources = kafka-source
+agent.channels = memory-channel
+agent.sinks = file-sink
+
+# Configure the Kafka source
+agent.sources.kafka-source.type = org.apache.flume.source.kafka.KafkaSource
+agent.sources.kafka-source.channels = memory-channel
+agent.sources.kafka-source.batchSize = 100
+agent.sources.kafka-source.topic = your_kafka_topic
+agent.sources.kafka-source.zookeeperConnect = your_zookeeper_connect
+agent.sources.kafka-source.consumer.groupId = your_group_id
+agent.sources.kafka-source.consumer.ssl.enable = true
+agent.sources.kafka-source.consumer.ssl.keystore.location = /path/to/keystore
+agent.sources.kafka-source.consumer.ssl.keystore.password = your_keystore_password
+agent.sources.kafka-source.consumer.ssl.truststore.location = /path/to/truststore
+agent.sources.kafka-source.consumer.ssl.truststore.password = your_truststore_password
+
+# Configure the memory channel
+agent.channels.memory-channel.type = memory
+agent.channels.memory-channel.capacity = 10000
+agent.channels.memory-channel.transactionCapacity = 1000
+
+# Configure the File sink with SSL
+agent.sinks.file-sink.type = org.apache.flume.sink.FileSink
+agent.sinks.file-sink.channel = memory-channel
+agent.sinks.file-sink.directory = /path/to/output_directory
+agent.sinks.file-sink.rollInterval = 0
+agent.sinks.file-sink.batchSize = 100
+agent.sinks.file-sink.useLocalTime = true
+agent.sinks.file-sink.serializer = your_custom_serializer
+agent.sinks.file-sink.serializer.appendNewline = true
+agent.sinks.file-sink.serializer.rollInterval = 0
+
+# Bind the sources, channels, and sinks to the agent
+agent.sources.kafka-source.channels = memory-channel
+agent.sinks.file-sink.channel = memory-channel
 
 
