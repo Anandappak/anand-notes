@@ -1,0 +1,29 @@
+var app = angular.module('yourApp', []);
+
+app.controller('FileDownloadController', ['$scope', '$http', function ($scope, $http) {
+    $scope.downloadFile = function () {
+        var downloadUrl = 'your/api/endpoint'; // Replace with the actual URL of your file download endpoint
+        var config = {
+            responseType: 'arraybuffer', // Important to handle binary data
+            headers: {
+                'Accept': 'application/pdf', // Adjust the content type based on your file type
+            }
+        };
+
+        $http.get(downloadUrl, config)
+            .then(function (response) {
+                var blob = new Blob([response.data], { type: 'application/pdf' }); // Adjust the content type based on your file type
+                var fileName = 'downloaded_file.pdf'; // Replace with the desired file name
+
+                // Create a virtual link and trigger a click to download the file
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = fileName;
+                link.click();
+            })
+            .catch(function (error) {
+                console.error('Error downloading file:', error);
+                // Handle error, e.g., display an error message to the user
+            });
+    };
+}]);
