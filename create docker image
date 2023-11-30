@@ -1,0 +1,31 @@
+Create a Dockerfile:
+step 1:- Create a file named Dockerfile in your Java project's root directory with the following content:
+
+# Use an official OpenJDK runtime as a base image
+FROM openjdk:11-jre-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the JAR file into the container at /app
+COPY target/your-application.jar /app/
+
+# Specify the default command to run on container startup
+CMD ["java", "-jar", "your-application.jar"]
+Replace your-application.jar with the actual name of your JAR file. Also, adjust the OpenJDK version if needed.
+
+step 2: Build the Docker Image:
+Open a terminal, navigate to the directory containing your Dockerfile, and run the following command to build the Docker image:
+
+$docker build -t your-docker-image-name .
+The -t flag allows you to specify a name for your Docker image.
+
+step 3: Run the Docker Container:
+Once the image is built, you can run a Docker container based on that image:
+$docker run your-docker-image-name
+  
+This will start a container based on your Docker image, and it will execute the CMD specified in the Dockerfile, which runs your Java application.
+If your Java application exposes a specific port, and you want to access it from your host machine, you can use the -p option to map the container port to a port on your host. For example:
+
+step 4:$docker run -p 8080:8080 your-docker-image-name
+Replace 8080 with the actual port your Java application is using.
