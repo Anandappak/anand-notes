@@ -1,0 +1,6 @@
+Export to csv file 
+SELECT * FROM your_table
+WHERE your_column IN ('value1', 'value2', 'value3')
+INTO OUTFILE '/path/to/your/output.csv'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
