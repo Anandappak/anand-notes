@@ -1,0 +1,66 @@
+Step 1 : Read A quary
+
+
+
+step 2 : Read a csv file 
+#!/bin/bash
+
+# Check if the required argument is provided
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <input_csv_file>"
+    exit 1
+fi
+
+# Assign input argument to a variable
+input_csv="$1"
+
+# Declare an array to store data
+declare -a id_array
+
+# Read the CSV file and populate the array
+while IFS=',' read -r id; do
+    # Skip empty lines
+    if [ -n "$id" ]; then
+        id_array+=("$id")
+    fi
+done < "$input_csv"
+
+# Print the contents of the array
+echo "Array contents:"
+for element in "${id_array[@]}"; do
+    echo "$element"
+done
+
+
+
+step 3 : update quary status inprogress
+
+
+
+
+step 4 : export to csv file 
+#!/bin/bash
+
+# Check if the required arguments are provided
+if [ "$#" -ne 4 ]; then
+    echo "Usage: $0 <output_csv_file> <database_host> <database_user> <database_password>"
+    exit 1
+fi
+
+# Assign input arguments to variables
+output_csv="$1"
+database_host="$2"
+database_user="$3"
+database_password="$4"
+
+# Database query to select data (customize as needed)
+select_query="SELECT * FROM your_table;"
+
+# Execute the query and save the result to a CSV file
+mysql -h "$database_host" -u "$database_user" -p"$database_password" -e "$select_query" --batch --raw > "$output_csv"
+
+echo "Data export complete. Results saved to $output_csv"
+
+step 5 : updated quary to table success
+
+step 4: update quary status success to table
