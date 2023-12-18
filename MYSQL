@@ -11,3 +11,7 @@ SELECT DATE_COLUMN, COUNT(*),DATE(DATE_COLUMN)
 FROM YOUR_TABLE
 GROUP BY DATE_COLUMN
 ORDER BY DATE_COLUMN;
+
+update table insert 
+UPDATE your_table
+SET new_column = SUBSTRING_INDEX(existing_column, ',', 1);
