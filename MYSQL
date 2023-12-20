@@ -15,3 +15,9 @@ ORDER BY DATE_COLUMN;
 update table insert 
 UPDATE your_table
 SET new_column = SUBSTRING_INDEX(existing_column, ',', 1);
+
+Hour wise count
+SELECT DATEPART(HOUR, YourTimestampColumn) AS HourOfDay, COUNT(*) AS HourlyCount
+FROM YourTableName
+GROUP BY DATEPART(HOUR, YourTimestampColumn)
+ORDER BY HourOfDay;
