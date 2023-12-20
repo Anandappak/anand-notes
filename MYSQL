@@ -21,3 +21,9 @@ SELECT DATEPART(HOUR, YourTimestampColumn) AS HourOfDay, COUNT(*) AS HourlyCount
 FROM YourTableName
 GROUP BY DATEPART(HOUR, YourTimestampColumn)
 ORDER BY HourOfDay;
+
+or
+SELECT HOUR(YourTimestampColumn) AS HourOfDay, COUNT(*) AS HourlyCount
+FROM YourTableName
+GROUP BY HOUR(YourTimestampColumn)
+ORDER BY HourOfDay;
