@@ -27,3 +27,9 @@ SELECT HOUR(YourTimestampColumn) AS HourOfDay, COUNT(*) AS HourlyCount
 FROM YourTableName
 GROUP BY HOUR(YourTimestampColumn)
 ORDER BY HourOfDay;
+
+or
+SELECT EXTRACT(HOUR FROM your_timestamp_column) AS hour_of_day, COUNT(*) AS count_per_hour
+FROM your_table
+GROUP BY hour_of_day
+ORDER BY hour_of_day;
