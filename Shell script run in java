@@ -1,0 +1,31 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class BashScriptRunner {
+
+    public static void main(String[] args) {
+        try {
+            // Specify the path to your Bash script
+            String scriptPath = "/path/to/your/script.sh";
+
+            // Use ProcessBuilder to execute the Bash script
+            ProcessBuilder processBuilder = new ProcessBuilder("bash", scriptPath);
+            Process process = processBuilder.start();
+
+            // Read output (if any) from the script
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+
+            // Wait for the script to finish
+            int exitCode = process.waitFor();
+            System.out.println("Script execution finished with exit code: " + exitCode);
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
