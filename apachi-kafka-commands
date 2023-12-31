@@ -89,6 +89,10 @@ bin\windows\kafka-reassign-partitions.bat --bootstrap-server localhost:9092 --to
 6)To export messages from a Kafka topic using the Kafka console consumer, you can use a command like the following:
 bin/kafka-console-consumer.sh --bootstrap-server your_kafka_bootstrap_servers --topic your_topic --from-beginning --property print.key=true --property print.value=true > output_file.txt
 
+
+7)Use the Kafka producer to send data from the text file to the Kafka topic. You can use the following command:
+bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic your_topic_name < your_text_file.txt
+
 =============================================
 new logic connection
 # Define the sources, channels, and sinks
