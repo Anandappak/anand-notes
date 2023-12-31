@@ -86,6 +86,9 @@ bin\windows\kafka-reassign-partitions.bat --bootstrap-server localhost:9092 --to
 
          kafka-mirror-maker.sh --consumer.config <consumer-config> --producer.config <producer-config> --whitelist <topics> --replication.config <replication-config>
 
+6)To export messages from a Kafka topic using the Kafka console consumer, you can use a command like the following:
+bin/kafka-console-consumer.sh --bootstrap-server your_kafka_bootstrap_servers --topic your_topic --from-beginning --property print.key=true --property print.value=true > output_file.txt
+
 =============================================
 new logic connection
 # Define the sources, channels, and sinks
