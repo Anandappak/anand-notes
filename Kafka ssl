@@ -75,4 +75,6 @@ agent.sinks.file-sink.serializer.rollInterval = 0
 agent.sources.kafka-source.channels = memory-channel
 agent.sinks.file-sink.channel = memory-channel
 
-
+Error ssl handshake alternative mis match
+Subject: CN=your-kafka-broker-hostname
+Subject Alternative Name: DNS:your-kafka-broker-hostname
