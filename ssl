@@ -20,3 +20,7 @@ openssl genpkey -algorithm RSA -out privatekey.pem -aes256
 openssl req -new -key privatekey.pem -out csr.pem
 
 openssl req -x509 -sha256 -days 365 -key privatekey.pem -in csr.pem -out certificate.pem
+
+
+Extract Ca cert by keystore from client trustore
+keytool -exportcert -alias myCA -keystore client-truststore.jks -rfc -file extracted-ca-cert.pem
