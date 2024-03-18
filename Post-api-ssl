@@ -1,0 +1,73 @@
+post api of files
+const express = require('express');
+const https = require('https');
+const fs = require('fs');
+const axios = require('axios');
+
+const app = express();
+const port = 3000;
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+// Endpoint to hit token API and then call the POST API
+app.get('/process', async (req, res) => {
+    try {
+        // Hit the token API and store the token in a variable
+        const token = await getToken(); 
+
+        // Call the POST API with the token
+        const result = await postData(token); 
+        res.send(result);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Function to hit the token API and return the token
+async function getToken() {
+    // Implement the logic to hit the token API and get the token
+    const response = await axios.post('TOKEN_API_ENDPOINT', {
+        // Add any required parameters for token retrieval
+    });
+    return response.data.token;
+}
+
+// Function to post data to the server API
+async function postData(token) {
+    const jsonData = {
+        // Your JSON data
+    };
+
+    // Read the contents of the upd file
+    const updFile = fs.readFileSync('path_to_upd_file');
+
+    // Perform the POST request to server API
+    const response = await axios.post('SERVER_API_ENDPOINT', {
+        jsonData,
+        updFile,
+    }, {
+        httpsAgent: new https.Agent({
+            ca: fs.readFileSync('chain-of-trust.pem'),
+            cert: fs.readFileSync('server.crt'),
+            key: fs.readFileSync('server.key'),
+        }),
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+    });
+    return response.data;
+}
+
+// Set up HTTPS server with SSL certificates
+const options = {
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.crt'),
+    ca: fs.readFileSync('chain-of-trust.pem')
+};
+
+https.createServer(options, app).listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
