@@ -24,3 +24,10 @@ openssl req -x509 -sha256 -days 365 -key privatekey.pem -in csr.pem -out certifi
 
 Extract Ca cert by keystore from client trustore
 keytool -exportcert -alias myCA -keystore client-truststore.jks -rfc -file extracted-ca-cert.pem
+
+
+ca-chain,server.crt and server.key
+openssl pkcs12 -export -out client.p12 -inkey server.key -in chain-of-trust.pem -name "client"
+
+export to jks
+keytool -importkeystore -destkeystore client.jks -deststorepass password -destkeypass password -deststoretype jks -srckeystore client.p12 -srcstoretype PKCS12 -srcstorepass password -alias client
