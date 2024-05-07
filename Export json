@@ -1,0 +1,48 @@
+export json
+
+import java.io.FileWriter
+import org.json.JSONObject
+
+fun main() {
+    val jsonData = JSONObject()
+    jsonData.put("key1", "value1")
+    jsonData.put("key2", "value2")
+
+    val file = FileWriter("data.json")
+    file.write(jsonData.toString())
+    file.close()
+
+    println("JSON data exported to data.json")
+}
+
+
+
+function downloadJSON(jsonData, filename) {
+    // Convert JSON data to a string
+    const jsonString = JSON.stringify(jsonData);
+    
+    // Create a blob containing the JSON data
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    
+    // Create a download link
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    
+    // Set the filename for the download
+    link.download = filename;
+    
+    // Trigger the download
+    link.click();
+}
+
+// Example JSON data
+const jsonData = {
+    name: "John",
+    age: 30
+};
+
+// Example filename
+const filename = 'data.json';
+
+// Trigger download
+downloadJSON(jsonData, filename);
