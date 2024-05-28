@@ -1,0 +1,29 @@
+mail sent
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Open Outlook</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-controller="EmailController">
+    <button ng-click="openOutlook()">Open Outlook</button>
+</body>
+</html>
+
+// Define your AngularJS application
+var app = angular.module('myApp', []);
+
+// Define a controller within the application
+app.controller('EmailController', function($scope) {
+    $scope.openOutlook = function() {
+        // Define the recipient email address
+        var recipientEmail = 'recipient@example.com';
+        
+        // Construct the mailto URL
+        var mailtoLink = 'mailto:' + recipientEmail;
+
+        // Open the mailto link, which should open the default mail client
+        window.location.href = mailtoLink;
+    };
+});
