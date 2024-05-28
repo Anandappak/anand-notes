@@ -27,3 +27,40 @@ app.controller('EmailController', function($scope) {
         window.location.href = mailtoLink;
     };
 });
+
+2nd ex
+<!DOCTYPE html>
+<html ng-app="mailApp">
+<head>
+    <title>Email Link Example</title>
+</head>
+<body ng-controller="MailController">
+    <a ng-href="mailto:{{emailAddress}}?subject={{emailSubject}}&body={{emailBody}}">Send Email</a>
+    
+    <!-- Optionally, you can add inputs to change the email data -->
+    <div>
+        <label>Recipient:</label>
+        <input type="text" ng-model="emailAddress">
+    </div>
+    <div>
+        <label>Subject:</label>
+        <input type="text" ng-model="emailSubject">
+    </div>
+    <div>
+        <label>Body:</label>
+        <textarea ng-model="emailBody"></textarea>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        angular.module('mailApp', [])
+        .controller('MailController', function($scope) {
+            // Initialize default values
+            $scope.emailAddress = 'example@example.com';
+            $scope.emailSubject = 'Hello!';
+            $scope.emailBody = 'I wanted to reach out to you regarding...';
+        });
+    </script>
+</body>
+</html>
+
